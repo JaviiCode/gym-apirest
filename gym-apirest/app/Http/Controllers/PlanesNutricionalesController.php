@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PlanesNutricionalesCollection;
 use App\Models\PlanesNutricionales;
 use App\Http\Requests\StorePlanesNutricionalesRequest;
 use App\Http\Requests\UpdatePlanesNutricionalesRequest;
@@ -13,7 +14,8 @@ class PlanesNutricionalesController extends Controller
      */
     public function index()
     {
-        //
+        $planesNutricionales = PlanesNutricionales::paginate(10);
+        return new PlanesNutricionalesCollection($planesNutricionales);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EjerciciosCollection;
 use App\Models\Ejercicios;
 use App\Http\Requests\StoreEjerciciosRequest;
 use App\Http\Requests\UpdateEjerciciosRequest;
@@ -13,7 +14,8 @@ class EjerciciosController extends Controller
      */
     public function index()
     {
-        //
+        $ejercicio = Ejercicios::paginate(10);
+        return new EjerciciosCollection($ejercicio);
     }
 
     /**

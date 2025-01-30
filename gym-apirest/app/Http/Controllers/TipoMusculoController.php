@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TipoMusculoCollection;
 use App\Models\TipoMusculo;
 use App\Http\Requests\StoreTipoMusculoRequest;
 use App\Http\Requests\UpdateTipoMusculoRequest;
@@ -13,7 +14,8 @@ class TipoMusculoController extends Controller
      */
     public function index()
     {
-        //
+        $tipomusculo = TipoMusculo::paginate(10);
+        return new TipoMusculoCollection($tipomusculo);
     }
 
     /**

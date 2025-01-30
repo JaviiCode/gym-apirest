@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PerfilesUsuarioCollection;
 use App\Models\PerfilesUsuario;
 use App\Http\Requests\StorePerfilesUsuarioRequest;
 use App\Http\Requests\UpdatePerfilesUsuarioRequest;
@@ -13,7 +14,8 @@ class PerfilesUsuarioController extends Controller
      */
     public function index()
     {
-        //
+        $perfilesUsuario = PerfilesUsuario::paginate(10);
+        return new PerfilesUsuarioCollection($perfilesUsuario);
     }
 
     /**

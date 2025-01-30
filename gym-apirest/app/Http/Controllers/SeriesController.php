@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SeriesCollection;
 use App\Models\Series;
 use App\Http\Requests\StoreSeriesRequest;
 use App\Http\Requests\UpdateSeriesRequest;
@@ -13,7 +14,8 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        //
+        $series = Series::paginate(10);
+        return new SeriesCollection($series);
     }
 
     /**

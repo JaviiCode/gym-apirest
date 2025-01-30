@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PlanesTablaEntrenamientoCollection;
 use App\Models\PlanesTablaEntrenamiento;
 use App\Http\Requests\StorePlanesTablaEntrenamientoRequest;
 use App\Http\Requests\UpdatePlanesTablaEntrenamientoRequest;
@@ -13,7 +14,8 @@ class PlanesTablaEntrenamientoController extends Controller
      */
     public function index()
     {
-        //
+        $PlanesTablaEntrenamientos = PlanesTablaEntrenamiento::paginate(10);
+        return new PlanesTablaEntrenamientoCollection($PlanesTablaEntrenamientos);
     }
 
     /**

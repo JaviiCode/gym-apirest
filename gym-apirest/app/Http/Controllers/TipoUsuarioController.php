@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TipoUsuarioCollection;
+use App\Http\Resources\TipoUsuarioResource;
 use App\Models\TipoUsuario;
 use App\Http\Requests\StoreTipoUsuarioRequest;
 use App\Http\Requests\UpdateTipoUsuarioRequest;
@@ -13,7 +15,8 @@ class TipoUsuarioController extends Controller
      */
     public function index()
     {
-        //
+        $tipousuarios = TipoUsuario::paginate(10);
+        return new TipoUsuarioCollection($tipousuarios);
     }
 
     /**
@@ -37,7 +40,7 @@ class TipoUsuarioController extends Controller
      */
     public function show(TipoUsuario $tipoUsuario)
     {
-        //
+        return new TipoUsuarioResource($tipoUsuario);
     }
 
     /**

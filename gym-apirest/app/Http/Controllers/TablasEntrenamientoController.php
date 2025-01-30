@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TablasEntrenamientoCollection;
 use App\Models\TablasEntrenamiento;
 use App\Http\Requests\StoreTablasEntrenamientoRequest;
 use App\Http\Requests\UpdateTablasEntrenamientoRequest;
@@ -13,7 +14,8 @@ class TablasEntrenamientoController extends Controller
      */
     public function index()
     {
-        //
+        $tablasEntrenamiento = TablasEntrenamiento::paginate(10);
+        return new TablasEntrenamientoCollection($tablasEntrenamiento);
     }
 
     /**

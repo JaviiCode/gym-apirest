@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TipoSerieCollection;
 use App\Models\TipoSerie;
 use App\Http\Requests\StoreTipoSerieRequest;
 use App\Http\Requests\UpdateTipoSerieRequest;
@@ -13,7 +14,8 @@ class TipoSerieController extends Controller
      */
     public function index()
     {
-        //
+        $tiposerie = TipoSerie::paginate(10);
+        return new TipoSerieCollection($tiposerie);
     }
 
     /**

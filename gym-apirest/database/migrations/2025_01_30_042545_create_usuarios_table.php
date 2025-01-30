@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('email', 255)->unique();
             $table->string('token', 255)->nullable();
             $table->string('clave', 255);
+            $table->date('fecha_registro')->nullable();
             $table->unsignedBigInteger('id_tipo_usuario');
             $table->foreign('id_tipo_usuario')->references('id_tipo_usuario')->on('tipousuario');
-            $table->date('fecha_registro')->nullable();
             $table->timestamps();
         });
     }

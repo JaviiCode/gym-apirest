@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EstatisticasEjercicioCollection;
 use App\Models\EstadisticasEjercicio;
 use App\Http\Requests\StoreEstadisticasEjercicioRequest;
 use App\Http\Requests\UpdateEstadisticasEjercicioRequest;
@@ -13,7 +14,8 @@ class EstadisticasEjercicioController extends Controller
      */
     public function index()
     {
-        //
+        $estadisticasEjercicio = EstadisticasEjercicio::paginate(10);
+        return new EstatisticasEjercicioCollection($estadisticasEjercicio);
     }
 
     /**

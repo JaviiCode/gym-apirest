@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UsuariosCollection;
+use App\Http\Resources\UsuariosResource;
 use App\Models\Usuarios;
 use App\Http\Requests\StoreUsuariosRequest;
 use App\Http\Requests\UpdateUsuariosRequest;
@@ -13,7 +15,8 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios = Usuarios::paginate(10);
+        return new UsuariosCollection($usuarios);
     }
 
     /**
@@ -37,7 +40,12 @@ class UsuariosController extends Controller
      */
     public function show(Usuarios $usuarios)
     {
-        //
+       // $filtroTipoUsuario = request()->query('tipo_usuario');
+
+        /*if ($filtroTipoUsuario) {
+            return new UsuariosResource($usuarios->loadMissing('tipoUsuario'));
+        }*/
+        return new UsuariosResource($usuarios);
     }
 
     /**

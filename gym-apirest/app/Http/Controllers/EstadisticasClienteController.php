@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EstadisticasClienteCollection;
 use App\Models\EstadisticasCliente;
 use App\Http\Requests\StoreEstadisticasClienteRequest;
 use App\Http\Requests\UpdateEstadisticasClienteRequest;
@@ -13,7 +14,8 @@ class EstadisticasClienteController extends Controller
      */
     public function index()
     {
-        //
+        $estadisticasCliente = EstadisticasCliente::paginate(10);
+        return new EstadisticasClienteCollection($estadisticasCliente);
     }
 
     /**

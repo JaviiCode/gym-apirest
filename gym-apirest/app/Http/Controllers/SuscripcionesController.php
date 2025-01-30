@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SuscripcionesCollection;
 use App\Models\Suscripciones;
 use App\Http\Requests\StoreSuscripcionesRequest;
 use App\Http\Requests\UpdateSuscripcionesRequest;
@@ -13,7 +14,8 @@ class SuscripcionesController extends Controller
      */
     public function index()
     {
-        //
+        $suscripciones = Suscripciones::paginate(10);
+        return new SuscripcionesCollection($suscripciones);
     }
 
     /**
