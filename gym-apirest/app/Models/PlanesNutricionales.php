@@ -9,4 +9,5 @@ class PlanesNutricionales extends Model
 {
     /** @use HasFactory<\Database\Factories\PlanesNutricionalesFactory> */
     use HasFactory;
+    protected $table = 'planesnutricionales';
 }

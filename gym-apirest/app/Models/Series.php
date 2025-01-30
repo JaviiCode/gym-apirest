@@ -9,4 +9,5 @@ class Series extends Model
 {
     /** @use HasFactory<\Database\Factories\SeriesFactory> */
     use HasFactory;
+    protected $table = 'series';
 }

@@ -9,4 +9,5 @@ class Ejercicios extends Model
 {
     /** @use HasFactory<\Database\Factories\EjerciciosFactory> */
     use HasFactory;
+    protected $table = 'ejercicios';
 }

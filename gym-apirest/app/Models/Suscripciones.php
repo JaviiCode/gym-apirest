@@ -9,4 +9,5 @@ class Suscripciones extends Model
 {
     /** @use HasFactory<\Database\Factories\SuscripcionesFactory> */
     use HasFactory;
+    protected $table = 'suscripciones';
 }

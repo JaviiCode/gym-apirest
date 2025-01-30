@@ -9,4 +9,5 @@ class TipoMusculo extends Model
 {
     /** @use HasFactory<\Database\Factories\TipoMusculoFactory> */
     use HasFactory;
+    protected $table = 'tiposmusculo';
 }

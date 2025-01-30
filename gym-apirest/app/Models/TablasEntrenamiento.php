@@ -9,4 +9,5 @@ class TablasEntrenamiento extends Model
 {
     /** @use HasFactory<\Database\Factories\TablasEntrenamientoFactory> */
     use HasFactory;
+    protected $table = 'tablasentrenamiento';
 }

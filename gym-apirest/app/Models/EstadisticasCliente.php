@@ -9,4 +9,5 @@ class EstadisticasCliente extends Model
 {
     /** @use HasFactory<\Database\Factories\EstadisticasClienteFactory> */
     use HasFactory;
+    protected $table = 'estadisticascliente';
 }
