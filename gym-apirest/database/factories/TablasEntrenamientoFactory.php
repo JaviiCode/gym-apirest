@@ -17,7 +17,10 @@ class TablasEntrenamientoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'semana' => $this->faker->numberBetween(1, 52),
+            'nombre' => $this->faker->sentence(3),
+            'num_ejercicios' => $this->faker->numberBetween(5, 20),
+            'num_dias' => $this->faker->numberBetween(1, 7),
         ];
     }
 }

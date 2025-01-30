@@ -3,7 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\PlanesEntrenamiento;
+use App\Models\TablasEntrenamiento;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PlanesTablaEntrenamiento>
  */
@@ -17,7 +18,8 @@ class PlanesTablaEntrenamientoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'id_plan' => PlanesEntrenamiento::inRandomOrder()->first()->id_plan,
+            'id_tabla' => TablasEntrenamiento::inRandomOrder()->first()->id_tabla,
         ];
     }
 }

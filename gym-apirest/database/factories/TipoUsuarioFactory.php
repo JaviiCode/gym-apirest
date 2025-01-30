@@ -17,7 +17,8 @@ class TipoUsuarioFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'tipo_usuario' => $this->faker->word,
+            'descripcion' => $this->faker->sentence,
         ];
     }
 }
