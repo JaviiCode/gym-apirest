@@ -31,7 +31,7 @@ Document where I indicate the order of migration creations.
 
 
 [ES]
-Documento donde indicio el orden de creaciones de migraciones.
+Documento donde indico el orden de creaciones de migraciones.
 
 1 - creamos la tabla tipousuario "php artisan make:model TipoUsuario --all". Primero esta porque no depende de ninguna otra tabla.
 
