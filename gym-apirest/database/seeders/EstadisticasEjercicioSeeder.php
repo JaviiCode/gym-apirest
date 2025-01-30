@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\EstadisticasEjercicio;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class EstadisticasEjercicioSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        EstadisticasEjercicio::factory()->count(10)->create();
     }
 }

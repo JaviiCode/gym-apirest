@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use App\Models\TipoUsuario;
 class TipoUsuarioSeeder extends Seeder
 {
     /**
@@ -12,6 +12,6 @@ class TipoUsuarioSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        TipoUsuario::factory()->count(10)->create();
     }
 }

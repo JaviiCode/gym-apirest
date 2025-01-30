@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use App\Models\TablasEntrenamiento;
 class TablasEntrenamientoSeeder extends Seeder
 {
     /**
@@ -12,6 +12,6 @@ class TablasEntrenamientoSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        TablasEntrenamiento::factory()->count(10)->create();
     }
 }
