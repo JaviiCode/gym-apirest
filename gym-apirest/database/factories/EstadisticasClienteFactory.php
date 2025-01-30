@@ -25,7 +25,7 @@ class EstadisticasClienteFactory extends Factory
             'pierna' => $this->faker->randomFloat(2, 40, 80),
             'biceps' => $this->faker->randomFloat(2, 20, 50),
             'triceps' => $this->faker->randomFloat(2, 20, 50),
-            'id_cliente' => Usuarios::inRandomOrder()->first()->id_usuario,
+            'id_cliente' => Usuarios::factory(),
         ];
     }
 }

@@ -18,8 +18,8 @@ class PlanesTablaEntrenamientoFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_plan' => PlanesEntrenamiento::inRandomOrder()->first()->id_plan,
-            'id_tabla' => TablasEntrenamiento::inRandomOrder()->first()->id_tabla,
+            'id_plan' => PlanesEntrenamiento::factory(),
+            'id_tabla' => TablasEntrenamiento::factory(),
         ];
     }
 }

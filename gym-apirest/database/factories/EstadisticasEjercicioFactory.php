@@ -18,7 +18,7 @@ class EstadisticasEjercicioFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_ejercicio' => Ejercicios::inRandomOrder()->first()->id_ejercicio,
+            'id_ejercicio' => Ejercicios::factory(),
             'num_sesiones' => $this->faker->numberBetween(1, 30),
             'tiempo_total' => $this->faker->randomFloat(2, 10, 300),
             'duracion_media' => $this->faker->randomFloat(2, 1, 10),

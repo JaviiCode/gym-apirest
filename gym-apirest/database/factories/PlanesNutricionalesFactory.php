@@ -17,8 +17,8 @@ class PlanesNutricionalesFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_nutricionista' => Usuarios::inRandomOrder()->first()->id_usuario,
-            'id_cliente' => Usuarios::inRandomOrder()->first()->id_usuario,
+            'id_nutricionista' => Usuarios::factory(),
+            'id_cliente' => Usuarios::factory(),
             'nombre' => $this->faker->word(),
             'recomendaciones_dieta' => $this->faker->paragraph(),
             'porcentaje_carbohidratos' => $this->faker->randomFloat(2, 30, 70),
