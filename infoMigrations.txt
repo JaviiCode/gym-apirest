@@ -1,0 +1,76 @@
+[EN]
+Document where I indicate the order of migration creations.
+
+1 - Create the tipousuario table with the command "php artisan make:model TipoUsuario --all". This is created first because it doesn't depend on any other table.
+
+2 - Create the usuarios table with the command "php artisan make:model Usuarios --all" because it references tipousuario.
+
+3 - Create the perfilesusuario table, which references usuarios, using "php artisan make:model PerfilesUsuario --all".
+
+4 - Create the suscripciones table, which has a reference to usuario, with "php artisan make:model Suscripciones --all".
+
+5 - Create the planesentrenamiento table, which has two references to usuarios, using "php artisan make:model PlanesEntrenamiento --all".
+
+6 - Create the tablasentrenamiento table, which has no references, with "php artisan make:model TablasEntrenamiento --all".
+
+7 - Create the tipomusculo table, as it has no references, using "php artisan make:model TipoMusculo --all".
+
+8 - Create the ejercicios table, which references tipomusculo, with "php artisan make:model Ejercicios --all".
+
+9 - Create the tiposerie table, as it is the base table, with "php artisan make:model TipoSerie --all".
+
+10 - Create the series table, which has 3 references, using "php artisan make:model Series --all".
+
+11 - Create the estadisticasejercicio table, which has 1 reference to ejercicios, with "php artisan make:model EstadisticasEjercicio --all".
+
+12 - Create the estadisticascliente table, which has 1 reference to usuarios, with "php artisan make:model EstadisticasCliente --all".
+
+13 - Create the planestablaentrenamiento table, which has 2 references, using "php artisan make:model PlanesTablaEntrenamiento --all".
+
+14 - Run a fresh migration with php artisan migrate:fresh.
+
+
+[ES]
+Documento donde indicio el orden de creaciones de migraciones.
+
+1 - creamos la tabla tipousuario "php artisan make:model TipoUsuario --all". Primero esta porque no depende de ninguna otra tabla.
+
+2 - creamos la tabla usuarios porque hace referencia a tipousuario "php artisan make:model Usuarios --all"
+
+3 - creamos la tabla perfilesusuario que hace referencia a usuarios "php artisan make:model PerfilesUsuario --all"
+
+4 - creamos la tabla de suscripciones, que tiene id de referencia a usuario "php artisan make:model Suscripciones --all"
+
+5 - creamos la tabla planesentrenamiento que tiene 2 referencias a usuarios "php artisan make:model PlanesEntrenamiento --all".
+
+6 - hacemos la tabla tablasentrenamiento que no tiene referencia a nada "php artisan make:model TablasEntrenamiento --all".
+
+7 -  creamos la tabla tipomusculo ya que no tiene referencias a nada "php artisan make:model TipoMusculo --all".
+
+6 - creamos la tabla ejercicios, que hace referencia a tipomusculo "php artisan make:model Ejercicios --all".
+
+9 - Creamos la tabla tiposerie ya que es la tabla base. "php artisan make:model TipoSerie --all".
+
+10 - Creamos la tabla series que tiene 3 referencias. "php artisan make:model Series --all".
+
+11 - Creamos la tabla estadisticasejercicio con 1 referencia a ejercicios "php artisan make:model EstadisticasEjercicio --all"
+
+12 - Creamos la tabla estadisticascliente con 1 referencia a usuarios. "php artisan make:model EstadisticasCliente --all".
+
+13 - Creamos planestablaentrenamiento que tiene 2 referencias "php artisan make:model PlanesTablaEntrenamiento --al".
+
+14 - Hacemos un migratefresh "php artisan migrate:fresh".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
