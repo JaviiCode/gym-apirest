@@ -38,14 +38,10 @@ class UsuariosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Usuarios $usuarios)
+    public function show($id)
     {
-       // $filtroTipoUsuario = request()->query('tipo_usuario');
-
-        /*if ($filtroTipoUsuario) {
-            return new UsuariosResource($usuarios->loadMissing('tipoUsuario'));
-        }*/
-        return new UsuariosResource($usuarios);
+        $usuarios = Usuarios::find($id);
+        return new UsuariosResource($usuarios->loadMissing('tipoUsuario'));
     }
 
     /**

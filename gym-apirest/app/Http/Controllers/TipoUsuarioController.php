@@ -38,8 +38,9 @@ class TipoUsuarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TipoUsuario $tipoUsuario)
+    public function show($id)
     {
+        $tipoUsuario = TipoUsuario::find($id);
         return new TipoUsuarioResource($tipoUsuario);
     }
 

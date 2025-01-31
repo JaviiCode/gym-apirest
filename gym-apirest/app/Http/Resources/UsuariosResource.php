@@ -20,7 +20,7 @@ class UsuariosResource extends JsonResource
             'token' => $this->token,
             'clave' => $this->clave,
             'fecha_registro' => $this->fecha_registro,
-            //'id_tipo_usuario' => new TipoUsuarioResource($this->whenLoaded('tipoUsuario')), // Aquí está la clav
+            'usuario' => new TipoUsuarioResource($this->whenLoaded('tipoUsuario')),//poner esto siempre en el show
         ];
     }
 }
