@@ -22,7 +22,9 @@ class UpdateUsuariosRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id' => ['sometimes','required'],
+            'email' => ['sometimes','required'],
+            'fecha_registro' => ['sometimes','required'],
         ];
     }
 }

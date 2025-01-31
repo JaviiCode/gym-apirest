@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('tipo_suscripcion', 50);
             $table->decimal('precio', 10, 2);
             $table->integer('dias');
+            $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
             $table->foreign('id_cliente')->references('id_usuario')->on('usuarios');
             $table->timestamps();

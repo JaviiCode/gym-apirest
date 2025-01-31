@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PerfilesUsuarioCollection;
+use App\Http\Resources\PerfilesUsuarioResource;
 use App\Models\PerfilesUsuario;
 use App\Http\Requests\StorePerfilesUsuarioRequest;
 use App\Http\Requests\UpdatePerfilesUsuarioRequest;
@@ -37,9 +38,10 @@ class PerfilesUsuarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PerfilesUsuario $perfilesUsuario)
+    public function show($id)
     {
-        //
+        $perfilUsuario = PerfilesUsuario::find($id);
+        return new PerfilesUsuarioResource($perfilUsuario);
     }
 
     /**

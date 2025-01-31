@@ -14,6 +14,14 @@ class SuscripcionesResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id_suscripcion,
+            'tipo_suscripcion' => $this->tipo_suscripcion,
+            'precio' => $this->precio,
+            'dias' => $this->dias,
+            'fecha_inicio' => $this->fecha_inicio,
+            'fecha_fin' => $this->fecha_fin,
+        ];
     }
 }
+

@@ -17,10 +17,11 @@ class UsuariosResource extends JsonResource
         return [
             'id' => $this->id_usuario,
             'email' => $this->email,
-            'token' => $this->token,
-            'clave' => $this->clave,
+            //'token' => $this->token,
+            //'clave' => $this->clave,
             'fecha_registro' => $this->fecha_registro,
-            'usuario' => new TipoUsuarioResource($this->whenLoaded('tipoUsuario')),//poner esto siempre en el show
+            'perfil' => new PerfilesUsuarioResource($this->whenLoaded('perfilUsuario')),
+            'suscripciones' => SuscripcionesResource::collection($this->Suscripciones),//poner esto siempre en el show
         ];
     }
 }

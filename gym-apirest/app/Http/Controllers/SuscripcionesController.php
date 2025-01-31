@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SuscripcionesCollection;
+use App\Http\Resources\SuscripcionesResource;
 use App\Models\Suscripciones;
 use App\Http\Requests\StoreSuscripcionesRequest;
 use App\Http\Requests\UpdateSuscripcionesRequest;
@@ -37,9 +38,12 @@ class SuscripcionesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Suscripciones $suscripciones)
+    public function show($id)
     {
-        //
+        $suscripcion = Suscripciones::find($id);
+        return new SuscripcionesResource($suscripcion);
+
+
     }
 
     /**

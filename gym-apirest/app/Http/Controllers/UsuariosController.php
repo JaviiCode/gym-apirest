@@ -41,7 +41,8 @@ class UsuariosController extends Controller
     public function show($id)
     {
         $usuarios = Usuarios::find($id);
-        return new UsuariosResource($usuarios->loadMissing('tipoUsuario'));
+        
+        return new UsuariosResource($usuarios->loadMissing('perfilUsuario', 'Suscripciones'));
     }
 
     /**
@@ -55,9 +56,10 @@ class UsuariosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUsuariosRequest $request, Usuarios $usuarios)
+    public function update(UpdateUsuariosRequest $request, $id)
     {
-        //
+        $usuarios = Usuarios::find($id);
+        $usuarios->update($request->all());
     }
 
     /**

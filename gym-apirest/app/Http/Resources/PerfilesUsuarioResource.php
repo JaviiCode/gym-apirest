@@ -14,6 +14,17 @@ class PerfilesUsuarioResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'nombre' => $this->nombre,
+            'apellido1' => $this->apellido1,
+            'apellido2' => $this->apellido2,
+            'edad' => $this->edad,
+            'direccion' => $this->direccion,
+            'telefono' => $this->telefono,
+            'foto' => $this->foto,
+            'fecha_nacimiento' => $this->fecha_nacimiento,
+            'usuario' => new TipoUsuarioResource($this->whenLoaded('tipoUsuario')),//poner esto siempre en el show
+        ];
     }
 }
+
