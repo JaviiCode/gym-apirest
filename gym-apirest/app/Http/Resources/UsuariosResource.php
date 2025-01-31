@@ -20,8 +20,10 @@ class UsuariosResource extends JsonResource
             //'token' => $this->token,
             //'clave' => $this->clave,
             'fecha_registro' => $this->fecha_registro,
-            'perfil' => new PerfilesUsuarioResource($this->whenLoaded('perfilUsuario')),
-            'suscripciones' => SuscripcionesResource::collection($this->Suscripciones),//poner esto siempre en el show
+            'perfil' => PerfilesUsuarioResource::collection($this->whenLoaded('perfilUsuario')),
+            'suscripciones' => SuscripcionesResource::collection($this->whenLoaded('Suscripciones')),//poner esto siempre en el show
+            'estadisticaCliente' => EstadisticasClienteResource::collection($this->whenLoaded('estadisticaCliente')),
+
         ];
     }
 }

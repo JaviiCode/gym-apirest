@@ -21,8 +21,8 @@ class PlanesEntrenamientoFactory extends Factory
             'id_entrenador' => Usuarios::factory(),
             'id_cliente' => Usuarios::factory(),
             'nombre' => $this->faker->sentence(3),
-            'fecha_inicio' => $this->faker->optional()->date,
-            'fecha_fin' => $this->faker->optional()->date,
+            'fecha_inicio' => $this->faker->date,
+            'fecha_fin' => $this->faker->date,
         ];
     }
 }

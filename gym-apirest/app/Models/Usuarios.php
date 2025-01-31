@@ -25,10 +25,14 @@ class Usuarios extends Model
     }
     public function perfilUsuario()
     {
-        return $this->belongsTo(PerfilesUsuario::class, 'id_usuario');
+        return $this->hasMany(PerfilesUsuario::class, 'id_usuario');
     }
     public function Suscripciones()
     {
         return $this->hasMany(Suscripciones::class, 'id_cliente');
+    }
+    public function EstadisticaCliente()
+    {
+        return $this->hasMany(EstadisticasCliente::class, 'id_cliente');
     }
 }

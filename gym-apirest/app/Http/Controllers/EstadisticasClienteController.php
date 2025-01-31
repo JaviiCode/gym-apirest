@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\EstadisticasClienteCollection;
+use App\Http\Resources\EstadisticasClienteResource;
 use App\Models\EstadisticasCliente;
 use App\Http\Requests\StoreEstadisticasClienteRequest;
 use App\Http\Requests\UpdateEstadisticasClienteRequest;
@@ -37,9 +38,11 @@ class EstadisticasClienteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(EstadisticasCliente $estadisticasCliente)
+    public function show($id)
     {
-        //
+        $estadisticaCliente = EstadisticasCliente::find($id);
+
+        return new EstadisticasClienteResource($estadisticaCliente);
     }
 
     /**
@@ -53,9 +56,10 @@ class EstadisticasClienteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEstadisticasClienteRequest $request, EstadisticasCliente $estadisticasCliente)
+    public function update(UpdateEstadisticasClienteRequest $request, EstadisticasCliente $id)
     {
-        //
+        $estadisticaCliente = EstadisticasCliente::find($id);
+        $estadisticaCliente->update($request->all());
     }
 
     /**
