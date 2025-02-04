@@ -14,8 +14,6 @@ class Usuarios extends Model
 
     protected $fillable = [
         'email',
-        'token',
-        'clave',
         'fecha_registro',
     ];
     //Relaciones
@@ -23,16 +21,39 @@ class Usuarios extends Model
     {
         return $this->belongsTo(TipoUsuario::class, 'id_tipo_usuario');
     }
+
     public function perfilUsuario()
     {
         return $this->hasMany(PerfilesUsuario::class, 'id_usuario');
     }
+
     public function Suscripciones()
     {
         return $this->hasMany(Suscripciones::class, 'id_cliente');
     }
+
     public function EstadisticaCliente()
     {
         return $this->hasMany(EstadisticasCliente::class, 'id_cliente');
+    }
+
+    public function planesComoEntrenador()
+    {
+        return $this->hasMany(PlanesEntrenamiento::class, 'id_entrenador');
+    }
+
+    public function planesComoCliente()
+    {
+        return $this->hasMany(PlanesEntrenamiento::class, 'id_cliente');
+    }
+
+    public function planesNutricionalesComoCliente()
+    {
+        return $this->hasMany(PlanesNutricionales::class, 'id_cliente');
+    }
+
+    public function planesNutricionalesComoNutricionista()
+    {
+        return $this->hasMany(PlanesNutricionales::class, 'id_nutricionista');
     }
 }

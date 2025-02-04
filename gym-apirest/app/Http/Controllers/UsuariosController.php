@@ -16,7 +16,17 @@ class UsuariosController extends Controller
     public function index()
     {
         $usuarios = Usuarios::paginate(10);
-        return new UsuariosCollection($usuarios->loadMissing('perfilUsuario', 'Suscripciones'));
+        return new UsuariosCollection(
+            $usuarios->loadMissing(
+
+                'perfilUsuario',
+                'suscripciones',
+                'estadisticaCliente',
+                'planesComoEntrenador',
+                'planesComoCliente',
+                'planesNutricionalesComoNutricionista',
+                'planesNutricionalesComoCliente'
+            ));
     }
 
     /**
@@ -42,7 +52,16 @@ class UsuariosController extends Controller
     {
         $usuarios = Usuarios::find($id);
 
-        return new UsuariosResource($usuarios->loadMissing('perfilUsuario', 'Suscripciones', 'estadisticaCliente'));
+        return new UsuariosResource(
+        $usuarios->loadMissing(
+            'perfilUsuario',
+            'suscripciones',
+            'estadisticaCliente',
+            'planesComoEntrenador',
+            'planesComoCliente',
+            'planesNutricionalesComoNutricionista',
+            'planesNutricionalesComoCliente'
+        ));
     }
 
     /**

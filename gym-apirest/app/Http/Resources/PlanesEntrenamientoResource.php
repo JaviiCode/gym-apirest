@@ -14,6 +14,13 @@ class PlanesEntrenamientoResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id_plan,
+            'entrenador' => new UsuariosResource($this->whenLoaded('entrenador')),
+            'cliente' => new UsuariosResource($this->whenLoaded('cliente')),
+            'nombre' => $this->nombre,
+            'fecha_inicio' => $this->fecha_inicio,
+            'fecha_fin' => $this->fecha_fin,
+        ];
     }
 }

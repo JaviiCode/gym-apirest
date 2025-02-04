@@ -22,7 +22,14 @@ class StoreEstadisticasClienteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'peso' => ['required'],
+            'altura' => ['required'],
+            'grasa_corporal' => ['required'],
+            'cintura' => ['required'],
+            'pecho' => ['required'],
+            'pierna' => ['required'],
+            'biceps' => ['required'],
+            'triceps' => ['required'],
         ];
     }
 }

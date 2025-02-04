@@ -19,6 +19,7 @@ class Suscripciones extends Model
         'dias',
         'fecha_inicio',
         'fecha_fin',
+        'id_cliente',
     ];
 
     public function Usuario()

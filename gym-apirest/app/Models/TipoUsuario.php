@@ -11,6 +11,9 @@ class TipoUsuario extends Model
     use HasFactory;
     protected $table = 'tipousuario';
     protected $primaryKey = 'id_tipo_usuario';
+    protected $fillable = [
+        'descripcion',
+    ];
     public function usuarios()
     {
         return $this->hasMany(Usuarios::class, 'id_tipo_usuario');

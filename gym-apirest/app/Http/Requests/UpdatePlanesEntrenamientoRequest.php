@@ -22,7 +22,11 @@ class UpdatePlanesEntrenamientoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id_entrenador' => ['sometimes', 'required'],
+            'id_cliente' => ['sometimes', 'required'],
+            'nombre' => ['sometimes', 'required'],
+            'fecha_inicio' => ['sometimes', 'required'],
+            'fecha_fin' => ['sometimes', 'required'],
         ];
     }
 }

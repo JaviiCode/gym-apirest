@@ -22,7 +22,16 @@ class UpdatePlanesNutricionalesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id_nutricionista' => ['sometimes', 'required'],
+            'id_cliente' => ['sometimes', 'required'],
+            'nombre' => ['sometimes', 'required'],
+            'recomendaciones_dieta' => ['sometimes', 'required'],
+            'porcentaje_carbohidratos' => ['sometimes', 'required'],
+            'porcentaje_proteinas' => ['sometimes', 'required'],
+            'porcentaje_grasas' => ['sometimes', 'required'],
+            'porcentaje_fibra' => ['sometimes', 'required'],
+            'fecha_inicio' => ['sometimes', 'required'],
+            'fecha_fin' => ['sometimes', 'required'],
         ];
     }
 }

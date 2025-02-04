@@ -32,7 +32,7 @@ class SuscripcionesController extends Controller
      */
     public function store(StoreSuscripcionesRequest $request)
     {
-        //
+        return new SuscripcionesResource(Suscripciones::create($request->all()));
     }
 
     /**
@@ -59,7 +59,7 @@ class SuscripcionesController extends Controller
      */
     public function update(UpdateSuscripcionesRequest $request, Suscripciones $suscripciones)
     {
-        //
+        $suscripciones->update($request->all());
     }
 
     /**
@@ -67,6 +67,5 @@ class SuscripcionesController extends Controller
      */
     public function destroy(Suscripciones $suscripciones)
     {
-        //
     }
 }

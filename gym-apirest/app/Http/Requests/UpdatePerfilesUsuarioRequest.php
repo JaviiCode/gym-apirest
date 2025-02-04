@@ -22,7 +22,14 @@ class UpdatePerfilesUsuarioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nombre' => ['sometimes', 'required'],
+            'apellido1' => ['sometimes', 'required'],
+            'apellido2' => ['sometimes', 'required'],
+            'edad' => ['sometimes', 'required'],
+            'direccion' => ['sometimes', 'required'],
+            'telefono' => ['sometimes', 'required'],
+            'foto' => ['sometimes', 'required'],
+            'fecha_nacimiento' => ['sometimes', 'required'],
         ];
     }
 }

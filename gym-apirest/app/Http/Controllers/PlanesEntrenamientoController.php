@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PlanesEntrenamientoCollection;
+use App\Http\Resources\PlanesEntrenamientoResource;
 use App\Models\PlanesEntrenamiento;
 use App\Http\Requests\StorePlanesEntrenamientoRequest;
 use App\Http\Requests\UpdatePlanesEntrenamientoRequest;
@@ -31,15 +32,17 @@ class PlanesEntrenamientoController extends Controller
      */
     public function store(StorePlanesEntrenamientoRequest $request)
     {
-        //
+        $plan = PlanesEntrenamiento::create($request->all());
+        return new PlanesEntrenamientoResource($plan);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(PlanesEntrenamiento $planesEntrenamiento)
+    public function show($id)
     {
-        //
+        $plan = PlanesEntrenamiento::find($id);
+        return new PlanesEntrenamientoResource($plan->loadMissing('entrenador', 'cliente'));
     }
 
     /**

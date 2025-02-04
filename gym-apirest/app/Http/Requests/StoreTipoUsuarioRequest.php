@@ -22,7 +22,7 @@ class StoreTipoUsuarioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'descripcion' => ['required'],
         ];
     }
 }

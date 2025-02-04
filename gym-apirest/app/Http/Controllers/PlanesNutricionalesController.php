@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PlanesNutricionalesCollection;
+use App\Http\Resources\PlanesNutricionalesResource;
 use App\Models\PlanesNutricionales;
 use App\Http\Requests\StorePlanesNutricionalesRequest;
 use App\Http\Requests\UpdatePlanesNutricionalesRequest;
@@ -37,9 +38,10 @@ class PlanesNutricionalesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PlanesNutricionales $planesNutricionales)
+    public function show($id)
     {
-        //
+        $planNutricional = PlanesNutricionales::findOrFail($id);
+        return new PlanesNutricionalesResource($planNutricional->loadMissing('nutricionista', 'cliente'));
     }
 
     /**

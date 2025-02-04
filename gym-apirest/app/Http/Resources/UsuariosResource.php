@@ -23,6 +23,10 @@ class UsuariosResource extends JsonResource
             'perfil' => PerfilesUsuarioResource::collection($this->whenLoaded('perfilUsuario')),
             'suscripciones' => SuscripcionesResource::collection($this->whenLoaded('Suscripciones')),//poner esto siempre en el show
             'estadisticaCliente' => EstadisticasClienteResource::collection($this->whenLoaded('estadisticaCliente')),
+            'planesComoEntrenador' => PlanesEntrenamientoResource::collection($this->whenLoaded('planesComoEntrenador')),
+            'planesComoCliente' => PlanesEntrenamientoResource::collection($this->whenLoaded('planesComoCliente')),
+            'planesNutricionalesComoCliente' => PlanesNutricionalesResource::collection($this->whenLoaded('planesNutricionalesComoCliente')),
+            'planesNutricionalesComoNutricionista' => PlanesNutricionalesResource::collection($this->whenLoaded('planesNutricionalesComoNutricionista')),
 
         ];
     }

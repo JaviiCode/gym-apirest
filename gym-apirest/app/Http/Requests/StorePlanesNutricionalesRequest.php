@@ -22,7 +22,16 @@ class StorePlanesNutricionalesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id_nutricionista' => ['required'],
+            'id_cliente' => ['required'],
+            'nombre' => ['required'],
+            'recomendaciones_dieta' => ['required'],
+            'porcentaje_carbohidratos' => ['required'],
+            'porcentaje_proteinas' => ['required'],
+            'porcentaje_grasas' => ['required'],
+            'porcentaje_fibra' => ['required'],
+            'fecha_inicio' => ['required'],
+            'fecha_fin' => ['required'],
         ];
     }
 }

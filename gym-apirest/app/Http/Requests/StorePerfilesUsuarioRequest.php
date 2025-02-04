@@ -22,7 +22,14 @@ class StorePerfilesUsuarioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nombre' => ['required'],
+            'apellido1' => ['required'],
+            'apellido2' => ['required'],
+            'edad' => ['required'],
+            'direccion' => ['required'],
+            'telefono' => ['required'],
+            'foto' => ['required'],
+            'fecha_nacimiento' => ['required'],
         ];
     }
 }

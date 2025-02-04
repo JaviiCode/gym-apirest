@@ -11,7 +11,7 @@ class StoreSuscripcionesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class StoreSuscripcionesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id_cliente' => ['required', 'exists:usuarios,id_usuario'],
+            'tipo_suscripcion' => ['required'],
+            'precio' => ['required'],
+            'dias' => ['required'],
+            'fecha_inicio' => ['required', 'date'],
+            'fecha_fin' => ['required', 'date', 'after:fecha_inicio'],
         ];
     }
 }

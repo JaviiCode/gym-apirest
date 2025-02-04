@@ -22,7 +22,14 @@ class UpdateEstadisticasClienteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'peso' => ['sometimes', 'required'],
+            'altura' => ['sometimes', 'required'],
+            'grasa_corporal' => ['sometimes', 'required'],
+            'cintura' => ['sometimes', 'required'],
+            'pecho' => ['sometimes', 'required'],
+            'pierna' => ['sometimes', 'required'],
+            'biceps' => ['sometimes', 'required'],
+            'triceps' => ['sometimes', 'required'],
         ];
     }
 }

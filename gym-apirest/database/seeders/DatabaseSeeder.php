@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             PerfilesUsuarioSeeder::class,
             SuscripcionesSeeder::class,
             PlanesEntrenamientoSeeder::class,
+            PlanesNutricionalesSeeder::class,
             TablasEntrenamientoSeeder::class,
             TipoMusculoSeeder::class,
             EjerciciosSeeder::class,
