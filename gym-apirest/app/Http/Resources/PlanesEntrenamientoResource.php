@@ -21,6 +21,8 @@ class PlanesEntrenamientoResource extends JsonResource
             'nombre' => $this->nombre,
             'fecha_inicio' => $this->fecha_inicio,
             'fecha_fin' => $this->fecha_fin,
+            'tablas_entrenamiento' => PlanesTablaEntrenamientoResource::collection($this->whenLoaded('tablasEntrenamiento')),
+
         ];
     }
 }

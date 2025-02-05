@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EstadisticasEjercicioResource;
 use App\Http\Resources\EstatisticasEjercicioCollection;
 use App\Models\EstadisticasEjercicio;
 use App\Http\Requests\StoreEstadisticasEjercicioRequest;
@@ -31,15 +32,17 @@ class EstadisticasEjercicioController extends Controller
      */
     public function store(StoreEstadisticasEjercicioRequest $request)
     {
-        //
+        $estadistica = EstadisticasEjercicio::create($request->all());
+        return new EstadisticasEjercicioResource($estadistica);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(EstadisticasEjercicio $estadisticasEjercicio)
+    public function show($id)
     {
-        //
+        $estadistica = EstadisticasEjercicio::findOrFail($id);
+        return new EstadisticasEjercicioResource($estadistica->loadMissing('ejercicio'));
     }
 
     /**
@@ -53,9 +56,11 @@ class EstadisticasEjercicioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEstadisticasEjercicioRequest $request, EstadisticasEjercicio $estadisticasEjercicio)
+    public function update(UpdateEstadisticasEjercicioRequest $request, $id)
     {
-        //
+        $estadistica = EstadisticasEjercicio::findOrFail($id);
+        $actualizado = $estadistica->update($request->all());
+        return response()->json(['success' => $actualizado]);
     }
 
     /**

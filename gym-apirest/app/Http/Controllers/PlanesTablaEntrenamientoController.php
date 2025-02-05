@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PlanesTablaEntrenamientoCollection;
+use App\Http\Resources\PlanesTablaEntrenamientoResource;
 use App\Models\PlanesTablaEntrenamiento;
 use App\Http\Requests\StorePlanesTablaEntrenamientoRequest;
 use App\Http\Requests\UpdatePlanesTablaEntrenamientoRequest;
@@ -14,8 +15,8 @@ class PlanesTablaEntrenamientoController extends Controller
      */
     public function index()
     {
-        $PlanesTablaEntrenamientos = PlanesTablaEntrenamiento::paginate(10);
-        return new PlanesTablaEntrenamientoCollection($PlanesTablaEntrenamientos);
+        $planTablas = PlanesTablaEntrenamiento::paginate(10);
+        return new PlanesTablaEntrenamientoCollection($planTablas->loadMissing('planEntrenamiento', 'tablaEntrenamiento'));
     }
 
     /**
@@ -31,15 +32,17 @@ class PlanesTablaEntrenamientoController extends Controller
      */
     public function store(StorePlanesTablaEntrenamientoRequest $request)
     {
-        //
+        $nuevoPlanTabla = PlanesTablaEntrenamiento::create($request->all());
+        return new PlanesTablaEntrenamientoResource($nuevoPlanTabla);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(PlanesTablaEntrenamiento $planesTablaEntrenamiento)
+    public function show($id)
     {
-        //
+        $planTabla = PlanesTablaEntrenamiento::findOrFail($id);
+        return new PlanesTablaEntrenamientoResource($planTabla->loadMissing('planEntrenamiento', 'tablaEntrenamiento'));
     }
 
     /**
@@ -55,7 +58,8 @@ class PlanesTablaEntrenamientoController extends Controller
      */
     public function update(UpdatePlanesTablaEntrenamientoRequest $request, PlanesTablaEntrenamiento $planesTablaEntrenamiento)
     {
-        //
+        $actualizado = $planesTablaEntrenamiento->update($request->all());
+        return response()->json(['success' => $actualizado]);
     }
 
     /**

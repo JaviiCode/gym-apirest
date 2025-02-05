@@ -57,7 +57,8 @@ class PerfilesUsuarioController extends Controller
      */
     public function update(UpdatePerfilesUsuarioRequest $request, PerfilesUsuario $perfilesUsuario)
     {
-        //
+        $actualizado = $perfilesUsuario->update($request->all());
+        return response()->json(['success' => $actualizado]);
     }
 
     /**

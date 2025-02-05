@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\TablasEntrenamientoCollection;
+use App\Http\Resources\TablasEntrenamientoResource;
 use App\Models\TablasEntrenamiento;
 use App\Http\Requests\StoreTablasEntrenamientoRequest;
 use App\Http\Requests\UpdateTablasEntrenamientoRequest;
@@ -31,15 +32,17 @@ class TablasEntrenamientoController extends Controller
      */
     public function store(StoreTablasEntrenamientoRequest $request)
     {
-        //
+        $nuevaTabla = TablasEntrenamiento::create($request->all());
+        return new TablasEntrenamientoResource($nuevaTabla);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(TablasEntrenamiento $tablasEntrenamiento)
+    public function show($id)
     {
-        //
+        $tabla = TablasEntrenamiento::findOrFail($id);
+        return new TablasEntrenamientoResource($tabla);
     }
 
     /**
@@ -55,7 +58,8 @@ class TablasEntrenamientoController extends Controller
      */
     public function update(UpdateTablasEntrenamientoRequest $request, TablasEntrenamiento $tablasEntrenamiento)
     {
-        //
+        $actualizado = $tablasEntrenamiento->update($request->all());
+        return response()->json(['success' => $actualizado]);
     }
 
     /**

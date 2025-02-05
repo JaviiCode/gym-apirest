@@ -22,7 +22,14 @@ class UpdateSeriesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'repeticiones_min' => 'sometimes|integer',
+            'repeticiones_max' => 'sometimes|integer',
+            'peso' => 'sometimes|numeric',
+            'duracion' => 'sometimes|numeric',
+            'descanso' => 'sometimes|numeric',
+            'id_ejercicio' => 'sometimes|exists:ejercicios,id_ejercicio',
+            'id_tabla' => 'sometimes|exists:tablasentrenamiento,id_tabla',
+            'id_tipo_serie' => 'sometimes|exists:tiposerie,id_tipo_serie',
         ];
     }
 }

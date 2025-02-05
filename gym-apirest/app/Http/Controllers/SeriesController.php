@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SeriesCollection;
+use App\Http\Resources\SeriesResource;
 use App\Models\Series;
 use App\Http\Requests\StoreSeriesRequest;
 use App\Http\Requests\UpdateSeriesRequest;
@@ -15,7 +16,7 @@ class SeriesController extends Controller
     public function index()
     {
         $series = Series::paginate(10);
-        return new SeriesCollection($series);
+        return new SeriesCollection($series->loadMissing('ejercicio', 'tablaEntrenamiento', 'tipoSerie'));
     }
 
     /**
@@ -31,15 +32,17 @@ class SeriesController extends Controller
      */
     public function store(StoreSeriesRequest $request)
     {
-        //
+        $nuevaSerie = Series::create($request->all());
+        return new SeriesResource($nuevaSerie);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Series $series)
+    public function show($id)
     {
-        //
+        $serie = Series::findOrFail($id);
+        return new SeriesResource($serie->loadMissing('ejercicio', 'tablaEntrenamiento', 'tipoSerie'));
     }
 
     /**
@@ -55,7 +58,8 @@ class SeriesController extends Controller
      */
     public function update(UpdateSeriesRequest $request, Series $series)
     {
-        //
+        $actualizado = $series->update($request->all());
+        return response()->json(['success' => $actualizado]);
     }
 
     /**

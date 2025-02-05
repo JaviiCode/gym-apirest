@@ -22,7 +22,14 @@ class StoreEstadisticasEjercicioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id_ejercicio' => 'required|exists:ejercicios,id_ejercicio',
+            'num_sesiones' => 'required|integer|min:0',
+            'tiempo_total' => 'required|numeric|min:0',
+            'duracion_media' => 'required|numeric|min:0',
+            'sets_completados' => 'required|integer|min:0',
+            'volumen_total' => 'required|numeric|min:0',
+            'repeticiones_totales' => 'required|integer|min:0',
+            'fecha_entrenamiento' => 'required|date',
         ];
     }
 }

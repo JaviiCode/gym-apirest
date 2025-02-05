@@ -57,7 +57,8 @@ class TipoUsuarioController extends Controller
      */
     public function update(UpdateTipoUsuarioRequest $request, TipoUsuario $tipoUsuario)
     {
-        //
+        $actualizado = $tipoUsuario->update($request->all());
+        return response()->json(['success' => $actualizado]);
     }
 
     /**

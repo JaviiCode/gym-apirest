@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\TipoMusculoCollection;
+use App\Http\Resources\TipoMusculoResource;
 use App\Models\TipoMusculo;
 use App\Http\Requests\StoreTipoMusculoRequest;
 use App\Http\Requests\UpdateTipoMusculoRequest;
@@ -31,15 +32,17 @@ class TipoMusculoController extends Controller
      */
     public function store(StoreTipoMusculoRequest $request)
     {
-        //
+        $tipoMusculo = TipoMusculo::create($request->all());
+        return new TipoMusculoResource($tipoMusculo);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(TipoMusculo $tipoMusculo)
+    public function show($id)
     {
-        //
+        $tipoMusculo = TipoMusculo::with('ejercicios')->find($id);
+        return new TipoMusculoResource($tipoMusculo);
     }
 
     /**
@@ -55,7 +58,8 @@ class TipoMusculoController extends Controller
      */
     public function update(UpdateTipoMusculoRequest $request, TipoMusculo $tipoMusculo)
     {
-        //
+        $actualizado = $tipoMusculo->update($request->all());
+        return response()->json(['success' => $actualizado]);
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Http\Resources\PlanesEntrenamientoResource;
 use App\Models\PlanesEntrenamiento;
 use App\Http\Requests\StorePlanesEntrenamientoRequest;
 use App\Http\Requests\UpdatePlanesEntrenamientoRequest;
+use App\Models\TablasEntrenamiento;
 
 class PlanesEntrenamientoController extends Controller
 {
@@ -15,8 +16,8 @@ class PlanesEntrenamientoController extends Controller
      */
     public function index()
     {
-        $planesEntrenamiento = PlanesEntrenamiento::paginate(10);
-        return new PlanesEntrenamientoCollection($planesEntrenamiento);
+        $plan = PlanesEntrenamiento::paginate(10);
+        return new PlanesEntrenamientoResource($plan->loadMissing('entrenador', 'cliente', 'PlanesEntrenamiento', 'TablasEntrenamiento'));
     }
 
     /**
@@ -42,7 +43,7 @@ class PlanesEntrenamientoController extends Controller
     public function show($id)
     {
         $plan = PlanesEntrenamiento::find($id);
-        return new PlanesEntrenamientoResource($plan->loadMissing('entrenador', 'cliente'));
+        return new PlanesEntrenamientoResource($plan->loadMissing('entrenador', 'cliente','TablasEntrenamiento'));
     }
 
     /**
@@ -58,7 +59,8 @@ class PlanesEntrenamientoController extends Controller
      */
     public function update(UpdatePlanesEntrenamientoRequest $request, PlanesEntrenamiento $planesEntrenamiento)
     {
-        //
+        $actualizado = $planesEntrenamiento->update($request->all());
+        return response()->json(['success' => $actualizado]);
     }
 
     /**

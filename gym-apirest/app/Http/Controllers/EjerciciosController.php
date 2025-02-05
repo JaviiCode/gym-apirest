@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\EjerciciosCollection;
+use App\Http\Resources\EjerciciosResource;
 use App\Models\Ejercicios;
 use App\Http\Requests\StoreEjerciciosRequest;
 use App\Http\Requests\UpdateEjerciciosRequest;
@@ -31,15 +32,17 @@ class EjerciciosController extends Controller
      */
     public function store(StoreEjerciciosRequest $request)
     {
-        //
+        $ejercicio = Ejercicios::create($request->all());
+        return new EjerciciosResource($ejercicio);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Ejercicios $ejercicios)
+    public function show($id)
     {
-        //
+        $ejercicio = Ejercicios::with('tipoMusculo')->find($id);
+        return new EjerciciosResource($ejercicio);
     }
 
     /**
@@ -53,9 +56,11 @@ class EjerciciosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEjerciciosRequest $request, Ejercicios $ejercicios)
+    public function update(UpdateEjerciciosRequest $request, $id)
     {
-        //
+        $ejercicio = Ejercicios::find($id);
+        $actualizado = $ejercicio->update($request->all());
+        return response()->json(['success' => $actualizado]);
     }
 
     /**

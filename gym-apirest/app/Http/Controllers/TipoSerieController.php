@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\TipoSerieCollection;
+use App\Http\Resources\TipoSerieResource;
 use App\Models\TipoSerie;
 use App\Http\Requests\StoreTipoSerieRequest;
 use App\Http\Requests\UpdateTipoSerieRequest;
@@ -31,15 +32,17 @@ class TipoSerieController extends Controller
      */
     public function store(StoreTipoSerieRequest $request)
     {
-        //
+        $nuevoTipo = TipoSerie::create($request->all());
+        return new TipoSerieResource($nuevoTipo);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(TipoSerie $tipoSerie)
+    public function show($id)
     {
-        //
+        $tipo = TipoSerie::findOrFail($id);
+        return new TipoSerieResource($tipo);
     }
 
     /**
@@ -55,7 +58,8 @@ class TipoSerieController extends Controller
      */
     public function update(UpdateTipoSerieRequest $request, TipoSerie $tipoSerie)
     {
-        //
+        $actualizado = $tipoSerie->update($request->all());
+        return response()->json(['success' => $actualizado]);
     }
 
     /**

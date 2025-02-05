@@ -22,7 +22,9 @@ class StoreEjerciciosRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nombre' => 'required|string|max:255',
+            'id_tipo_musculo' => 'required|exists:tiposmusculo,id_tipo_musculo',
+            'descripcion' => 'nullable|string',
         ];
     }
 }

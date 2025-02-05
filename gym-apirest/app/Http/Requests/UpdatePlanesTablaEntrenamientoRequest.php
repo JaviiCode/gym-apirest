@@ -22,7 +22,8 @@ class UpdatePlanesTablaEntrenamientoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id_plan' => 'required|exists:planesentrenamiento,id_plan',
+            'id_tabla' => 'required|exists:tablasentrenamiento,id_tabla',
         ];
     }
 }

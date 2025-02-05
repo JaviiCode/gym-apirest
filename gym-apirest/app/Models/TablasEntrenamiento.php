@@ -10,4 +10,20 @@ class TablasEntrenamiento extends Model
     /** @use HasFactory<\Database\Factories\TablasEntrenamientoFactory> */
     use HasFactory;
     protected $table = 'tablasentrenamiento';
+    protected $primaryKey = 'id_tabla';
+
+    protected $fillable = [
+        'semana',
+        'nombre',
+        'num_ejercicios',
+        'num_dias',
+    ];
+    public function series()
+    {
+        return $this->hasMany(Series::class, 'id_tabla');
+    }
+    public function planesEntrenamiento()
+    {
+        return $this->hasMany(PlanesTablaEntrenamiento::class, 'id_tabla');
+    }
 }

@@ -57,7 +57,8 @@ class PlanesNutricionalesController extends Controller
      */
     public function update(UpdatePlanesNutricionalesRequest $request, PlanesNutricionales $planesNutricionales)
     {
-        //
+        $actualizado = $planesNutricionales->update($request->all());
+        return response()->json(['success' => $actualizado]);
     }
 
     /**

@@ -14,6 +14,16 @@ class TablasEntrenamientoResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id_tabla,
+            'semana' => $this->semana,
+            'nombre' => $this->nombre,
+            'num_ejercicios' => $this->num_ejercicios,
+            'num_dias' => $this->num_dias,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'planes_entrenamiento' => PlanesTablaEntrenamientoResource::collection($this->whenLoaded('planesEntrenamiento')),
+
+        ];
     }
 }

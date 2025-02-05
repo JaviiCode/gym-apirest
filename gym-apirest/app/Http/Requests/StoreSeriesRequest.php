@@ -22,7 +22,14 @@ class StoreSeriesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'repeticiones_min' => 'required|integer',
+            'repeticiones_max' => 'required|integer',
+            'peso' => 'required|numeric',
+            'duracion' => 'required|numeric',
+            'descanso' => 'required|numeric',
+            'id_ejercicio' => 'required|exists:ejercicios,id_ejercicio',
+            'id_tabla' => 'required|exists:tablasentrenamiento,id_tabla',
+            'id_tipo_serie' => 'required|exists:tiposerie,id_tipo_serie',
         ];
     }
 }

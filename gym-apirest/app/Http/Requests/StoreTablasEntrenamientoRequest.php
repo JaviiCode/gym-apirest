@@ -22,7 +22,10 @@ class StoreTablasEntrenamientoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'semana' => 'required|integer',
+            'nombre' => 'required|string|max:255',
+            'num_ejercicios' => 'required|integer',
+            'num_dias' => 'required|integer',
         ];
     }
 }

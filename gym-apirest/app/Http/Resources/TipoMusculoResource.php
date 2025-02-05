@@ -14,6 +14,11 @@ class TipoMusculoResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id_tipo_musculo,
+            'nombre' => $this->nombre,
+            'descripcion' => $this->descripcion,
+            'ejercicios' => EjerciciosResource::collection($this->whenLoaded('ejercicios')),
+        ];
     }
 }

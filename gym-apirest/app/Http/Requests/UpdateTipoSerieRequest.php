@@ -22,7 +22,8 @@ class UpdateTipoSerieRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nombre' => 'sometimes|string|max:255',
+            'descripcion' => 'sometimes|nullable|string',
         ];
     }
 }

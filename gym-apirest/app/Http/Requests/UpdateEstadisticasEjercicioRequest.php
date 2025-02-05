@@ -22,7 +22,14 @@ class UpdateEstadisticasEjercicioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id_ejercicio' => 'sometimes|exists:ejercicios,id_ejercicio',
+            'num_sesiones' => 'sometimes|integer|min:0',
+            'tiempo_total' => 'sometimes|numeric|min:0',
+            'duracion_media' => 'sometimes|numeric|min:0',
+            'sets_completados' => 'sometimes|integer|min:0',
+            'volumen_total' => 'sometimes|numeric|min:0',
+            'repeticiones_totales' => 'sometimes|integer|min:0',
+            'fecha_entrenamiento' => 'sometimes|date',
         ];
     }
 }

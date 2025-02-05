@@ -25,8 +25,11 @@ class UsuariosController extends Controller
                 'planesComoEntrenador',
                 'planesComoCliente',
                 'planesNutricionalesComoNutricionista',
-                'planesNutricionalesComoCliente'
-            ));
+                'planesNutricionalesComoCliente',
+                'planesComoEntrenador',
+                'planesComoCliente'
+            )
+        );
     }
 
     /**
@@ -53,15 +56,18 @@ class UsuariosController extends Controller
         $usuarios = Usuarios::find($id);
 
         return new UsuariosResource(
-        $usuarios->loadMissing(
-            'perfilUsuario',
-            'suscripciones',
-            'estadisticaCliente',
-            'planesComoEntrenador',
-            'planesComoCliente',
-            'planesNutricionalesComoNutricionista',
-            'planesNutricionalesComoCliente'
-        ));
+            $usuarios->loadMissing(
+                'perfilUsuario',
+                'suscripciones',
+                'estadisticaCliente',
+                'planesComoEntrenador',
+                'planesComoCliente',
+                'planesNutricionalesComoNutricionista',
+                'planesNutricionalesComoCliente',
+                'planesComoEntrenador',
+                'planesComoCliente'
+            )
+        );
     }
 
     /**

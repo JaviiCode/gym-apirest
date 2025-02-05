@@ -22,7 +22,10 @@ class UpdateTablasEntrenamientoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'semana' => 'sometimes|integer',
+            'nombre' => 'sometimes|string|max:255',
+            'num_ejercicios' => 'sometimes|integer',
+            'num_dias' => 'sometimes|integer',
         ];
     }
 }

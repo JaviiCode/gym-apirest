@@ -59,7 +59,8 @@ class SuscripcionesController extends Controller
      */
     public function update(UpdateSuscripcionesRequest $request, Suscripciones $suscripciones)
     {
-        $suscripciones->update($request->all());
+        $actualizado = $suscripciones->update($request->all());
+        return response()->json(['success' => $actualizado]);
     }
 
     /**
