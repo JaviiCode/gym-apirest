@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteTipoMusculoRequest;
 use App\Http\Resources\TipoMusculoCollection;
 use App\Http\Resources\TipoMusculoResource;
 use App\Models\TipoMusculo;
@@ -42,6 +43,9 @@ class TipoMusculoController extends Controller
     public function show($id)
     {
         $tipoMusculo = TipoMusculo::with('ejercicios')->find($id);
+        if(!$tipoMusculo){
+            return 'Peticion no encontrada';
+        }
         return new TipoMusculoResource($tipoMusculo);
     }
 
@@ -65,8 +69,10 @@ class TipoMusculoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TipoMusculo $tipoMusculo)
+    public function destroy(DeleteTipoMusculoRequest $request, $id)
     {
-        //
+        $musculo = TipoMusculo::find($id);
+        $musculo->delete();
+        return response("Eliminacion Completada.");
     }
 }

@@ -11,7 +11,8 @@ class UpdateUsuariosRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $usuario = $this->user();
+        return $usuario->tokenCan('admin')||$usuario->tokenCan('usuarios');
     }
 
     /**
@@ -23,7 +24,7 @@ class UpdateUsuariosRequest extends FormRequest
     {
         return [
             'email' => ['sometimes','required'],
-            'fecha_registro' => ['sometimes','required'],
+            'clave' => ['sometimes', 'required'],
         ];
     }
 }

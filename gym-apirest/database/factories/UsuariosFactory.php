@@ -21,7 +21,7 @@ class UsuariosFactory extends Factory
             'email' => $this->faker->unique()->safeEmail,
             'token' => $this->faker->uuid,
             'clave' => bcrypt('password'),
-            'id_tipo_usuario' => Tipousuario::factory(),
+            'id_tipo_usuario' => 5,
             'fecha_registro' => $this->faker->date,
         ];
     }

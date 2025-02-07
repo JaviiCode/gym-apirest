@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteTablasEntrenamientoRequest;
 use App\Http\Resources\TablasEntrenamientoCollection;
 use App\Http\Resources\TablasEntrenamientoResource;
 use App\Models\TablasEntrenamiento;
@@ -16,7 +17,7 @@ class TablasEntrenamientoController extends Controller
     public function index()
     {
         $tablasEntrenamiento = TablasEntrenamiento::paginate(10);
-        return new TablasEntrenamientoCollection($tablasEntrenamiento);
+        return new TablasEntrenamientoCollection($tablasEntrenamiento->loadMissing('planesEntrenamiento','series'));
     }
 
     /**
@@ -33,7 +34,10 @@ class TablasEntrenamientoController extends Controller
     public function store(StoreTablasEntrenamientoRequest $request)
     {
         $nuevaTabla = TablasEntrenamiento::create($request->all());
-        return new TablasEntrenamientoResource($nuevaTabla);
+        if($request->has('id_plan')){
+            $nuevaTabla->planesEntrenamiento()->sync($request->id_plan);
+        }
+        return new TablasEntrenamientoResource($nuevaTabla->loadMissing('planesEntrenamiento','series'));
     }
 
     /**
@@ -42,6 +46,9 @@ class TablasEntrenamientoController extends Controller
     public function show($id)
     {
         $tabla = TablasEntrenamiento::findOrFail($id);
+        if(!$tabla){
+            return 'Peticion no encontrada';
+        }
         return new TablasEntrenamientoResource($tabla);
     }
 
@@ -65,8 +72,10 @@ class TablasEntrenamientoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TablasEntrenamiento $tablasEntrenamiento)
+    public function destroy(DeleteTablasEntrenamientoRequest $request, $id)
     {
-        //
+        $tablas = TablasEntrenamiento::find($id);
+        $tablas->delete();
+        return response("Eliminacion Completada.");
     }
 }

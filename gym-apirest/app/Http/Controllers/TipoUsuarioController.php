@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteTipoUsuarioRequest;
 use App\Http\Resources\TipoUsuarioCollection;
 use App\Http\Resources\TipoUsuarioResource;
 use App\Models\TipoUsuario;
@@ -32,7 +33,8 @@ class TipoUsuarioController extends Controller
      */
     public function store(StoreTipoUsuarioRequest $request)
     {
-        //
+        $tipoUsuario = TipoUsuario::create($request->all());
+        return new TipoUsuarioResource($tipoUsuario);
     }
 
     /**
@@ -41,6 +43,9 @@ class TipoUsuarioController extends Controller
     public function show($id)
     {
         $tipoUsuario = TipoUsuario::find($id);
+        if(!$tipoUsuario){
+            return 'Peticion no encontrada';
+        }
         return new TipoUsuarioResource($tipoUsuario);
     }
 
@@ -64,8 +69,10 @@ class TipoUsuarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TipoUsuario $tipoUsuario)
+    public function destroy(DeleteTipoUsuarioRequest $request, $id)
     {
-        //
+        $usuarios = TipoUsuario::find($id);
+        $usuarios->delete();
+        return response("Eliminacion Completada.");
     }
 }

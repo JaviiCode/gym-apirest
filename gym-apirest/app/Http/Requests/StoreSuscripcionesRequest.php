@@ -11,7 +11,8 @@ class StoreSuscripcionesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $usuario = $this->user();
+        return $usuario->tokenCan('admin')||$usuario->tokenCan('suscripciones');
     }
 
     /**

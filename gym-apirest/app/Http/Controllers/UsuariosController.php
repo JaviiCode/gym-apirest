@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteUsuariosRequest;
 use App\Http\Resources\UsuariosCollection;
 use App\Http\Resources\UsuariosResource;
 use App\Models\Usuarios;
+use DateTime;
 use App\Http\Requests\StoreUsuariosRequest;
 use App\Http\Requests\UpdateUsuariosRequest;
 
@@ -45,7 +47,14 @@ class UsuariosController extends Controller
      */
     public function store(StoreUsuariosRequest $request)
     {
-        //
+        $usuario = Usuarios::create($request->all());
+        $toke = $usuario->createToken('clienteToken');
+        $usuario->token = $toke->plainTextToken;
+        $usuario->id_tipo_usuario = '5';
+        $fecha = date("Y-m-d H:i:s");
+        $usuario->fecha_registro = $fecha;
+        $usuario->save();
+        return new UsuariosResource($usuario);
     }
 
     /**
@@ -55,6 +64,9 @@ class UsuariosController extends Controller
     {
         $usuarios = Usuarios::find($id);
 
+        if(!$usuarios){
+            return 'Usuario no existe';
+        }
         return new UsuariosResource(
             $usuarios->loadMissing(
                 'perfilUsuario',
@@ -68,6 +80,8 @@ class UsuariosController extends Controller
                 'planesComoCliente'
             )
         );
+
+
     }
 
     /**
@@ -90,8 +104,17 @@ class UsuariosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Usuarios $usuarios)
+    public function destroy(DeleteUsuariosRequest $request, $id)
     {
-        //
+        $usuarios = Usuarios::find($id);
+        $usuarios->delete();
+        return response("Eliminacion Completada.");
+    }
+
+    public function usuarioInfo($id){
+        $usuario = Usuarios::find($id);
+        $usuario->usuarioInfo();
+
+        return new UsuariosResource($usuario);
     }
 }

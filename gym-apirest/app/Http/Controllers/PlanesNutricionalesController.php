@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeletePlanesNutricionalesRequest;
 use App\Http\Resources\PlanesNutricionalesCollection;
 use App\Http\Resources\PlanesNutricionalesResource;
 use App\Models\PlanesNutricionales;
@@ -32,7 +33,8 @@ class PlanesNutricionalesController extends Controller
      */
     public function store(StorePlanesNutricionalesRequest $request)
     {
-        //
+        $nuevoPlan = PlanesNutricionales::create($request->all());
+        return new PlanesNutricionalesResource($nuevoPlan);
     }
 
     /**
@@ -41,6 +43,9 @@ class PlanesNutricionalesController extends Controller
     public function show($id)
     {
         $planNutricional = PlanesNutricionales::findOrFail($id);
+        if(!$planNutricional){
+            return 'Peticion no encontrada';
+        }
         return new PlanesNutricionalesResource($planNutricional->loadMissing('nutricionista', 'cliente'));
     }
 
@@ -64,8 +69,10 @@ class PlanesNutricionalesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PlanesNutricionales $planesNutricionales)
+    public function destroy(DeletePlanesNutricionalesRequest $request, $id)
     {
-        //
+        $plan = PlanesNutricionales::find($id);
+        $plan->delete();
+        return response("Eliminacion Completada.");
     }
 }

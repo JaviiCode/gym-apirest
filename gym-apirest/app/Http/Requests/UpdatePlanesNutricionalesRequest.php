@@ -11,7 +11,8 @@ class UpdatePlanesNutricionalesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        $usuario = $this->user();
+        return $usuario->tokenCan('admin')||$usuario->tokenCan('planes_nutricionales');
     }
 
     /**

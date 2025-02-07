@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteTipoSerieRequest;
 use App\Http\Resources\TipoSerieCollection;
 use App\Http\Resources\TipoSerieResource;
 use App\Models\TipoSerie;
@@ -42,6 +43,9 @@ class TipoSerieController extends Controller
     public function show($id)
     {
         $tipo = TipoSerie::findOrFail($id);
+        if(!$tipo){
+            return 'Peticion no encontrada';
+        }
         return new TipoSerieResource($tipo);
     }
 
@@ -65,8 +69,10 @@ class TipoSerieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TipoSerie $tipoSerie)
+    public function destroy(DeleteTipoSerieRequest $request, $id)
     {
-        //
+        $serie = TipoSerie::find($id);
+        $serie->delete();
+        return response("Eliminacion Completada.");
     }
 }

@@ -22,7 +22,8 @@ class TablasEntrenamientoResource extends JsonResource
             'num_dias' => $this->num_dias,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'planes_entrenamiento' => PlanesTablaEntrenamientoResource::collection($this->whenLoaded('planesEntrenamiento')),
+            'planes_entrenamiento' => PlanesEntrenamientoResource::collection($this->whenLoaded('planesEntrenamiento')),
+            'series' => SeriesResource::collection($this->whenLoaded('series')),
 
         ];
     }

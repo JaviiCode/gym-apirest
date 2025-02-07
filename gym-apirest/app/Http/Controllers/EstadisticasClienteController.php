@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteEstadisticasClienteRequest;
 use App\Http\Resources\EstadisticasClienteCollection;
 use App\Http\Resources\EstadisticasClienteResource;
 use App\Models\EstadisticasCliente;
@@ -32,7 +33,8 @@ class EstadisticasClienteController extends Controller
      */
     public function store(StoreEstadisticasClienteRequest $request)
     {
-        //
+        $nuevaEstadisticas = EstadisticasCliente::create($request->all());
+        return new EstadisticasClienteResource($nuevaEstadisticas);
     }
 
     /**
@@ -41,6 +43,9 @@ class EstadisticasClienteController extends Controller
     public function show($id)
     {
         $estadisticaCliente = EstadisticasCliente::find($id);
+        if(!$estadisticaCliente){
+            return 'Peticion no encontrada';
+        }
 
         return new EstadisticasClienteResource($estadisticaCliente);
     }
@@ -65,8 +70,10 @@ class EstadisticasClienteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EstadisticasCliente $estadisticasCliente)
+    public function destroy(DeleteEstadisticasClienteRequest $request, $id)
     {
-        //
+        $estadistica = EstadisticasCliente::find($id);
+        $estadistica->delete();
+        return response("Eliminacion Completada.");
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeletePerfilesUsuarioRequest;
 use App\Http\Resources\PerfilesUsuarioCollection;
 use App\Http\Resources\PerfilesUsuarioResource;
 use App\Models\PerfilesUsuario;
@@ -32,7 +33,8 @@ class PerfilesUsuarioController extends Controller
      */
     public function store(StorePerfilesUsuarioRequest $request)
     {
-        //
+        $nuevoPerfil = PerfilesUsuario::create($request->all());
+        return new PerfilesUsuarioResource($nuevoPerfil);
     }
 
     /**
@@ -41,6 +43,9 @@ class PerfilesUsuarioController extends Controller
     public function show($id)
     {
         $perfilUsuario = PerfilesUsuario::find($id);
+        if(!$perfilUsuario){
+            return 'Peticion no encontrada';
+        }
         return new PerfilesUsuarioResource($perfilUsuario);
     }
 
@@ -64,8 +69,10 @@ class PerfilesUsuarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PerfilesUsuario $perfilesUsuario)
+    public function destroy(DeletePerfilesUsuarioRequest $request, $id)
     {
-        //
+        $perfil = PerfilesUsuario::find($id);
+        $perfil->delete();
+        return response("Eliminacion Completada.");
     }
 }

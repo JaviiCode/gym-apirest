@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeletePlanesEntrenamientoRequest;
 use App\Http\Resources\PlanesEntrenamientoCollection;
 use App\Http\Resources\PlanesEntrenamientoResource;
 use App\Models\PlanesEntrenamiento;
@@ -17,7 +18,7 @@ class PlanesEntrenamientoController extends Controller
     public function index()
     {
         $plan = PlanesEntrenamiento::paginate(10);
-        return new PlanesEntrenamientoResource($plan->loadMissing('entrenador', 'cliente', 'PlanesEntrenamiento', 'TablasEntrenamiento'));
+        return new PlanesEntrenamientoCollection($plan->loadMissing('entrenador', 'cliente', 'tablasEntrenamiento'));
     }
 
     /**
@@ -34,7 +35,10 @@ class PlanesEntrenamientoController extends Controller
     public function store(StorePlanesEntrenamientoRequest $request)
     {
         $plan = PlanesEntrenamiento::create($request->all());
-        return new PlanesEntrenamientoResource($plan);
+        if($request->has('id_tabla')){
+            $plan->tablasEntrenamiento()->sync($request->id_tabla);
+        }
+        return new PlanesEntrenamientoResource($plan->loadMissing('tablasEntrenamiento'));
     }
 
     /**
@@ -43,7 +47,10 @@ class PlanesEntrenamientoController extends Controller
     public function show($id)
     {
         $plan = PlanesEntrenamiento::find($id);
-        return new PlanesEntrenamientoResource($plan->loadMissing('entrenador', 'cliente','TablasEntrenamiento'));
+        if(!$plan){
+            return 'Peticion no encontrada';
+        }
+        return new PlanesEntrenamientoResource($plan->loadMissing('entrenador', 'cliente','tablasEntrenamiento'));
     }
 
     /**
@@ -66,8 +73,10 @@ class PlanesEntrenamientoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PlanesEntrenamiento $planesEntrenamiento)
+    public function destroy(DeletePlanesEntrenamientoRequest $request, $id)
     {
-        //
+        $plan = PlanesEntrenamiento::find($id);
+        $plan->delete();
+        return response("Eliminacion Completada.");
     }
 }

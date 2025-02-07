@@ -11,7 +11,8 @@ class StoreTablasEntrenamientoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        $usuario = $this->user();
+        return $usuario->tokenCan('admin')||$usuario->tokenCan('tablas_entrenamieto');
     }
 
     /**
@@ -26,6 +27,7 @@ class StoreTablasEntrenamientoRequest extends FormRequest
             'nombre' => 'required|string|max:255',
             'num_ejercicios' => 'required|integer',
             'num_dias' => 'required|integer',
+            'id_plan' => ['sometimes','required'],
         ];
     }
 }

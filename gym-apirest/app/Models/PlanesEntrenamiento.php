@@ -31,6 +31,6 @@ class PlanesEntrenamiento extends Model
     }
     public function tablasEntrenamiento()
     {
-        return $this->hasMany(PlanesTablaEntrenamiento::class, 'id_plan');
+        return $this->belongsToMany(TablasEntrenamiento::class, 'planestablaentrenamientos', 'id_plan', 'id_tabla');
     }
 }

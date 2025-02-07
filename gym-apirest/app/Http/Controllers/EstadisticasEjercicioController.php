@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteEstadisticasEjercicioRequest;
 use App\Http\Resources\EstadisticasEjercicioResource;
 use App\Http\Resources\EstatisticasEjercicioCollection;
 use App\Models\EstadisticasEjercicio;
@@ -42,6 +43,9 @@ class EstadisticasEjercicioController extends Controller
     public function show($id)
     {
         $estadistica = EstadisticasEjercicio::findOrFail($id);
+        if(!$estadistica){
+            return 'Peticion no encontrada';
+        }
         return new EstadisticasEjercicioResource($estadistica->loadMissing('ejercicio'));
     }
 
@@ -66,8 +70,10 @@ class EstadisticasEjercicioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EstadisticasEjercicio $estadisticasEjercicio)
+    public function destroy(DeleteEstadisticasEjercicioRequest $request, $id)
     {
-        //
+        $estadistica = EstadisticasEjercicio::find($id);
+        $estadistica->delete();
+        return response("Eliminacion Completada.");
     }
 }

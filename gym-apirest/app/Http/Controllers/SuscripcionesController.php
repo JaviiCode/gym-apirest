@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteSuscripcionesRequest;
 use App\Http\Resources\SuscripcionesCollection;
 use App\Http\Resources\SuscripcionesResource;
 use App\Models\Suscripciones;
@@ -41,6 +42,9 @@ class SuscripcionesController extends Controller
     public function show($id)
     {
         $suscripcion = Suscripciones::find($id);
+        if(!$suscripcion){
+            return 'Peticion no encontrada';
+        }
         return new SuscripcionesResource($suscripcion);
 
 
@@ -66,7 +70,10 @@ class SuscripcionesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Suscripciones $suscripciones)
+    public function destroy(DeleteSuscripcionesRequest $request, $id)
     {
+        $suscripciones = Suscripciones::find($id);
+        $suscripciones->delete();
+        return response("Eliminacion Completada.");
     }
 }

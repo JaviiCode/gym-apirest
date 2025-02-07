@@ -2,7 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\PlanesEntrenamiento;
+use App\Models\PlanesNutricionales;
 use App\Models\PlanesTablaEntrenamiento;
+use App\Models\Series;
+use App\Models\TablasEntrenamiento;
+use App\Models\Usuarios;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 class PlanesTablaEntrenamientoSeeder extends Seeder
@@ -12,6 +17,21 @@ class PlanesTablaEntrenamientoSeeder extends Seeder
      */
     public function run(): void
     {
-        PlanesTablaEntrenamiento::factory()->count(10)->create();
+        for ($i = 1; $i < 2; $i++) {
+            $usuario = Usuarios::find($i);
+            $planEntrenamiento = PlanesEntrenamiento::find(1);
+            $planEntrenamiento->id_cliente=$i;
+            $tablasEntrenamiento = TablasEntrenamiento::find(1);
+            $planEntrenamiento->tablasEntrenamiento()->sync(1);
+            $planNutricional = PlanesNutricionales::find(1);
+            $planNutricional->id_cliente=$i;
+            $series = Series::find(1);
+            $series->id_tabla = 1;
+            $usuario->save();
+            $planEntrenamiento->save();
+            $tablasEntrenamiento->save();
+            $planNutricional->save();
+            $series->save();
+        }
     }
 }

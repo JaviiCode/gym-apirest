@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteSeriesRequest;
 use App\Http\Resources\SeriesCollection;
 use App\Http\Resources\SeriesResource;
 use App\Models\Series;
@@ -42,6 +43,9 @@ class SeriesController extends Controller
     public function show($id)
     {
         $serie = Series::findOrFail($id);
+        if(!$serie){
+            return 'Peticion no encontrada';
+        }
         return new SeriesResource($serie->loadMissing('ejercicio', 'tablaEntrenamiento', 'tipoSerie'));
     }
 
@@ -65,8 +69,10 @@ class SeriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Series $series)
+    public function destroy(DeleteSeriesRequest $request, $id)
     {
-        //
+        $series = Series::find($id);
+        $series->delete();
+        return response("Eliminacion Completada.");
     }
 }

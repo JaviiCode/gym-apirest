@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteEjerciciosRequest;
 use App\Http\Resources\EjerciciosCollection;
 use App\Http\Resources\EjerciciosResource;
 use App\Models\Ejercicios;
@@ -42,6 +43,9 @@ class EjerciciosController extends Controller
     public function show($id)
     {
         $ejercicio = Ejercicios::with('tipoMusculo')->find($id);
+        if(!$ejercicio){
+            return 'Peticion no encontrada';
+        }
         return new EjerciciosResource($ejercicio);
     }
 
@@ -66,8 +70,10 @@ class EjerciciosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ejercicios $ejercicios)
+    public function destroy(DeleteEjerciciosRequest $request, $id)
     {
-        //
+        $ejercicio = Ejercicios::find($id);
+        $ejercicio->delete();
+        return response("Eliminacion Completada.");
     }
 }

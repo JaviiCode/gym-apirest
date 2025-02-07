@@ -4,14 +4,15 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePlanesTablaEntrenamientoRequest extends FormRequest
+class DeleteTipoSerieRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        $usuario = $this->user();
+        return $usuario->tokenCan('admin')||$usuario->tokenCan('ejercicios');
     }
 
     /**
@@ -22,8 +23,7 @@ class StorePlanesTablaEntrenamientoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_plan' => 'required|exists:planesentrenamiento,id_plan',
-            'id_tabla' => 'required|exists:tablasentrenamiento,id_tabla',
+            //
         ];
     }
 }

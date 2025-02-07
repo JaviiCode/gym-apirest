@@ -11,7 +11,8 @@ class StoreUsuariosRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        $usuario = $this->user();
+        return $usuario->tokenCan('admin')||$usuario->tokenCan('usuarios');
     }
 
     /**
@@ -23,7 +24,7 @@ class StoreUsuariosRequest extends FormRequest
     {
         return [
             'email' => ['required', 'email'],
-            'fecha_registro' => ['required', 'date'],
+            'clave' => ['required'],
         ];
     }
 }
