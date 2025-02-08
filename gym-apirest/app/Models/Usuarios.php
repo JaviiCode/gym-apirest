@@ -65,31 +65,37 @@ class Usuarios extends Authenticatable
         return $this->hasMany(PlanesNutricionales::class, 'id_nutricionista');
     }
 
-    /*public function usuarioInfo(){
-        $planesEntrenamiento = $this->planesComoCliente;
 
-        foreach($planesEntrenamiento as $planEntrenamiento){
-            $tablas = $planEntrenamiento->tablasEntrenamiento();
-            foreach($tablas as $tabla){
-                $series = $tabla->series();
-                foreach($series as $serie){
-                    $serie->ejercicio();
-                }
-            }
-            $planesNutricionales = $this->planesNutricionalesComoCliente;
-            foreach($planesNutricionales as $plan){
-                $plan->nutricionista;
-            }
-        }
-    }*/
+    public static function usuarioCliente( $usuario){
+        $tipoCliente=TipoUsuario::where('tipo_usuario', 'cliente')->first();
+        return $usuario->id_tipo_usuario == $tipoCliente->id_tipo_usuario;
+    }
+    public static function usuarioAdmin( $usuario){
+        $tipoAdmin=TipoUsuario::where('tipo_usuario', 'administrador')->first();
+        return $usuario->id_tipo_usuario == $tipoAdmin->id_tipo_usuario;
+    }
+    public static function usuarioGestor( $usuario){
+        $tipoGestor=TipoUsuario::where('tipo_usuario', 'gestor')->first();
+        return $usuario->id_tipo_usuario == $tipoGestor->id_tipo_usuario;
+    }
+
+    public static function usuarioEntrenador( $usuario){
+        $tipoEntrenador=TipoUsuario::where('tipo_usuario', 'entrenador')->first();
+        return $usuario->id_tipo_usuario == $tipoEntrenador->id_tipo_usuario;
+    }
+
+    public static function usuarioNutricionista( $usuario){
+        $tipoNutricionista=TipoUsuario::where('tipo_usuario', 'nutricionista')->first();
+        return $usuario->id_tipo_usuario == $tipoNutricionista->id_tipo_usuario;
+    }
 
     public function usuarioInfo()
     {
         $planes = $this->planesComoCliente;
         $tablas = [];
 
-        foreach ($planes as $plan) {//Se recorre cada plan del usuario
-            foreach ($plan->tablasEntrenamiento as $tabla) {//Se recorre cada tabla de cada plan y cada uno se guarda
+        foreach ($planes as $plan) {
+            foreach ($plan->tablasEntrenamiento as $tabla) {
                 $tablas[] = $tabla;
             }
         }
@@ -136,69 +142,4 @@ class Usuarios extends Authenticatable
 
         return $tablas;
     }
-
-
-    public function series()
-    {
-        $tablas = $this->tablasEntrenamiento();
-        $series = [];
-
-        foreach ($tablas as $tabla) {
-            foreach ($tabla->series as $serie) {
-                $series[] = $serie;
-            }
-        }
-
-        return $series;
-
-    }
-
-    public function ejercicios()
-    {
-        $series = $this->series();
-        $ejercicios = [];
-
-        foreach ($series as $serie) {
-            $ejercicios[] = $serie->ejercicio;
-        }
-
-        return $ejercicios;
-    }
-
-    public function entrenadores()
-    {
-        $planes = $this->planesComoCliente;
-        $entrenadores = [];
-
-        foreach ($planes as $plan) {
-            $entrenadores[] = $plan->entrenador;
-        }
-
-        return $entrenadores;
-    }
-
-    public function nutricionistas()
-    {
-        $planes = $this->planesNutricionalesComoCliente;
-        $nutricionistas = [];
-
-        foreach ($planes as $plan) {
-            $nutricionistas[] = $plan->nutricionista;
-        }
-
-        return $nutricionistas;
-    }
-
-    public function tiposMusculo()
-    {
-        $ejercicios = $this->ejercicios();
-        $tipos = [];
-
-        foreach ($ejercicios as $ejercicio) {
-            $tipos[] = $ejercicio->tipoMusculo;
-        }
-
-        return $tipos;
-    }
-
 }

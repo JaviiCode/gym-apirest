@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteTipoUsuarioRequest;
+use App\Http\Requests\IndexTipoUsuarioRequest;
+use App\Http\Requests\ShowTipoUsuarioRequest;
 use App\Http\Resources\TipoUsuarioCollection;
 use App\Http\Resources\TipoUsuarioResource;
 use App\Models\TipoUsuario;
@@ -14,7 +16,7 @@ class TipoUsuarioController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(IndexTipoUsuarioRequest $request)
     {
         $tipousuarios = TipoUsuario::paginate(10);
         return new TipoUsuarioCollection($tipousuarios);
@@ -40,7 +42,7 @@ class TipoUsuarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(ShowTipoUsuarioRequest $request, $id)
     {
         $tipoUsuario = TipoUsuario::find($id);
         if(!$tipoUsuario){

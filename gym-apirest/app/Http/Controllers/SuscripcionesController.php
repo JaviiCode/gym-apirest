@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteSuscripcionesRequest;
+use App\Http\Requests\IndexSuscripcionesRequest;
+use App\Http\Requests\ShowSuscripcionesRequest;
 use App\Http\Resources\SuscripcionesCollection;
 use App\Http\Resources\SuscripcionesResource;
 use App\Models\Suscripciones;
 use App\Http\Requests\StoreSuscripcionesRequest;
 use App\Http\Requests\UpdateSuscripcionesRequest;
+use App\Models\Usuarios;
 
 class SuscripcionesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(IndexSuscripcionesRequest $request)
     {
         $suscripciones = Suscripciones::paginate(10);
         return new SuscripcionesCollection($suscripciones);
@@ -33,18 +36,28 @@ class SuscripcionesController extends Controller
      */
     public function store(StoreSuscripcionesRequest $request)
     {
+        if(!Usuarios::find($request->id_usuarios)){
+            return response('Error, Usuario no existe.');
+        }
+
         return new SuscripcionesResource(Suscripciones::create($request->all()));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(ShowSuscripcionesRequest $request, $id)
     {
         $suscripcion = Suscripciones::find($id);
         if(!$suscripcion){
             return 'Peticion no encontrada';
         }
+
+        $usuario = $request->user();
+        if ($usuario->id_usuario != $suscripcion->id_cliente && !Usuarios::usuarioAdmin($usuario) && !Usuarios::usuarioGestor($usuario)) {
+            return response('Error. Acceso no disponible', 401);
+        }
+
         return new SuscripcionesResource($suscripcion);
 
 
@@ -63,6 +76,10 @@ class SuscripcionesController extends Controller
      */
     public function update(UpdateSuscripcionesRequest $request, Suscripciones $suscripciones)
     {
+        if($request->id_cliente && !Usuarios::find($request->id_usuarios)){
+            return response('Error, Usuario no existe.');
+        }
+
         $actualizado = $suscripciones->update($request->all());
         return response()->json(['success' => $actualizado]);
     }

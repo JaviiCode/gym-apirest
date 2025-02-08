@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteSeriesRequest;
+use App\Http\Requests\IndexSeriesRequest;
+use App\Http\Requests\ShowSeriesRequest;
 use App\Http\Resources\SeriesCollection;
 use App\Http\Resources\SeriesResource;
 use App\Models\Series;
 use App\Http\Requests\StoreSeriesRequest;
 use App\Http\Requests\UpdateSeriesRequest;
+use App\Models\TipoSerie;
 
 class SeriesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(IndexSeriesRequest $request)
     {
         $series = Series::paginate(10);
         return new SeriesCollection($series->loadMissing('ejercicio', 'tablaEntrenamiento', 'tipoSerie'));
@@ -33,14 +36,18 @@ class SeriesController extends Controller
      */
     public function store(StoreSeriesRequest $request)
     {
+        if(!TipoSerie::find($request->id_tipo_serie)){
+            return response('Error, Tipo serie no existe.');
+        }
         $nuevaSerie = Series::create($request->all());
+
         return new SeriesResource($nuevaSerie);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(ShowSeriesRequest $request, $id)
     {
         $serie = Series::findOrFail($id);
         if(!$serie){
@@ -62,6 +69,9 @@ class SeriesController extends Controller
      */
     public function update(UpdateSeriesRequest $request, Series $series)
     {
+        if($request->id_tipo_serie && !TipoSerie::find($request->id_tipo_serie)){
+            return response('Error, Tipo serie no existe.');
+        }
         $actualizado = $series->update($request->all());
         return response()->json(['success' => $actualizado]);
     }

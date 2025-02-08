@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteTipoSerieRequest;
+use App\Http\Requests\IndexTipoSerieRequest;
+use App\Http\Requests\ShowTipoSerieRequest;
 use App\Http\Resources\TipoSerieCollection;
 use App\Http\Resources\TipoSerieResource;
 use App\Models\TipoSerie;
@@ -14,7 +16,7 @@ class TipoSerieController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(IndexTipoSerieRequest $request)
     {
         $tiposerie = TipoSerie::paginate(10);
         return new TipoSerieCollection($tiposerie);
@@ -40,7 +42,7 @@ class TipoSerieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(ShowTipoSerieRequest $request, $id)
     {
         $tipo = TipoSerie::findOrFail($id);
         if(!$tipo){

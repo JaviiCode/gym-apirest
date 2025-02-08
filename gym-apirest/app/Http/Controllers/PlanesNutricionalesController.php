@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeletePlanesNutricionalesRequest;
+use App\Http\Requests\IndexPlanesNutricionalesRequest;
+use App\Http\Requests\ShowPlanesNutricionalesRequest;
 use App\Http\Resources\PlanesNutricionalesCollection;
 use App\Http\Resources\PlanesNutricionalesResource;
 use App\Models\PlanesNutricionales;
 use App\Http\Requests\StorePlanesNutricionalesRequest;
 use App\Http\Requests\UpdatePlanesNutricionalesRequest;
+use App\Models\Usuarios;
 
 class PlanesNutricionalesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(IndexPlanesNutricionalesRequest $request)
     {
         $planesNutricionales = PlanesNutricionales::paginate(10);
         return new PlanesNutricionalesCollection($planesNutricionales);
@@ -33,6 +36,12 @@ class PlanesNutricionalesController extends Controller
      */
     public function store(StorePlanesNutricionalesRequest $request)
     {
+        $cliente = Usuarios::find($request->id_cliente);
+        $nutricionista = Usuarios::find($request->id_nutricionista);
+        if(!Usuarios::find($request->id_cliente) || !Usuarios::usuarioCliente($cliente) || !Usuarios::usuarioNutricionista($nutricionista) || !Usuarios::find($request->id_nutricionista)){
+            return response('Error, Usuario invalido.');
+        }
+
         $nuevoPlan = PlanesNutricionales::create($request->all());
         return new PlanesNutricionalesResource($nuevoPlan);
     }
@@ -40,12 +49,20 @@ class PlanesNutricionalesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(ShowPlanesNutricionalesRequest $request, $id)
     {
         $planNutricional = PlanesNutricionales::findOrFail($id);
-        if(!$planNutricional){
+        if (!$planNutricional) {
             return 'Peticion no encontrada';
         }
+        $usuario = $request->user();
+        if ($usuario->id_usuario != $planNutricional->id_cliente && !Usuarios::usuarioAdmin($usuario) && !Usuarios::usuarioNutricionista($usuario)) {
+            return response('Error. Acceso no disponible', 401);
+        }
+        if(Usuarios::usuarioEntrenador($usuario) && $usuario->id_usuario != $planNutricional->id_nutricionista){
+            return response('Error. Acceso no disponible', 401);
+        }
+
         return new PlanesNutricionalesResource($planNutricional->loadMissing('nutricionista', 'cliente'));
     }
 
@@ -62,6 +79,12 @@ class PlanesNutricionalesController extends Controller
      */
     public function update(UpdatePlanesNutricionalesRequest $request, PlanesNutricionales $planesNutricionales)
     {
+        $cliente = Usuarios::find($request->id_cliente);
+        $nutricionista = Usuarios::find($request->id_nutricionista);
+
+        if($request->id_cliente && !Usuarios::find($request->id_cliente) ||  $request->id_cliente && !Usuarios::usuarioCliente($cliente) || $request->id_cliente && !Usuarios::usuarioNutricionista($nutricionista) || $request->id_nutricionista && !Usuarios::find($request->id_nutricionista)){
+            return response('Error, Usuario invalido.');
+        }
         $actualizado = $planesNutricionales->update($request->all());
         return response()->json(['success' => $actualizado]);
     }

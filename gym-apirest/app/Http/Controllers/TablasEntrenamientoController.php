@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteTablasEntrenamientoRequest;
+use App\Http\Requests\IndexTablasEntrenamientoRequest;
+use App\Http\Requests\ShowTablasEntrenamientoRequest;
 use App\Http\Resources\TablasEntrenamientoCollection;
 use App\Http\Resources\TablasEntrenamientoResource;
+use App\Models\PlanesEntrenamiento;
 use App\Models\TablasEntrenamiento;
 use App\Http\Requests\StoreTablasEntrenamientoRequest;
 use App\Http\Requests\UpdateTablasEntrenamientoRequest;
@@ -14,7 +17,7 @@ class TablasEntrenamientoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(IndexTablasEntrenamientoRequest $request)
     {
         $tablasEntrenamiento = TablasEntrenamiento::paginate(10);
         return new TablasEntrenamientoCollection($tablasEntrenamiento->loadMissing('planesEntrenamiento','series'));
@@ -33,6 +36,10 @@ class TablasEntrenamientoController extends Controller
      */
     public function store(StoreTablasEntrenamientoRequest $request)
     {
+        if(!PlanesEntrenamiento::find($request->id_plan)){
+            return response('Error, Plan no existe no existe.');
+        }
+
         $nuevaTabla = TablasEntrenamiento::create($request->all());
         if($request->has('id_plan')){
             $nuevaTabla->planesEntrenamiento()->sync($request->id_plan);
@@ -43,12 +50,14 @@ class TablasEntrenamientoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(ShowTablasEntrenamientoRequest $request, $id)
     {
         $tabla = TablasEntrenamiento::findOrFail($id);
         if(!$tabla){
             return 'Peticion no encontrada';
         }
+
+
         return new TablasEntrenamientoResource($tabla);
     }
 
@@ -65,6 +74,9 @@ class TablasEntrenamientoController extends Controller
      */
     public function update(UpdateTablasEntrenamientoRequest $request, TablasEntrenamiento $tablasEntrenamiento)
     {
+        if($request->id_plan && !PlanesEntrenamiento::find($request->id_plan)){
+            return response('Error, Plan no existe no existe.');
+        };
         $actualizado = $tablasEntrenamiento->update($request->all());
         return response()->json(['success' => $actualizado]);
     }

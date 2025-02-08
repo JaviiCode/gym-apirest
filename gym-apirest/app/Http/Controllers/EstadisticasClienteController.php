@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteEstadisticasClienteRequest;
+use App\Http\Requests\IndexEstadisticasClienteRequest;
+use App\Http\Requests\ShowEstadisticasClienteRequest;
 use App\Http\Resources\EstadisticasClienteCollection;
 use App\Http\Resources\EstadisticasClienteResource;
 use App\Models\EstadisticasCliente;
 use App\Http\Requests\StoreEstadisticasClienteRequest;
 use App\Http\Requests\UpdateEstadisticasClienteRequest;
+use App\Models\Usuarios;
 
 class EstadisticasClienteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(IndexEstadisticasClienteRequest $request)
     {
         $estadisticasCliente = EstadisticasCliente::paginate(10);
         return new EstadisticasClienteCollection($estadisticasCliente);
@@ -33,6 +36,10 @@ class EstadisticasClienteController extends Controller
      */
     public function store(StoreEstadisticasClienteRequest $request)
     {
+        if(!Usuarios::find($request->id_cliente)){
+            return response('Error, Usuario no existe no existe.');
+        }
+
         $nuevaEstadisticas = EstadisticasCliente::create($request->all());
         return new EstadisticasClienteResource($nuevaEstadisticas);
     }
@@ -40,13 +47,16 @@ class EstadisticasClienteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(ShowEstadisticasClienteRequest $request, $id)
     {
         $estadisticaCliente = EstadisticasCliente::find($id);
         if(!$estadisticaCliente){
             return 'Peticion no encontrada';
         }
-
+        $usuario = $request->user();
+        if($usuario->id_usuario != $estadisticaCliente->id_cliente && Usuarios::usuarioCliente($usuario)){
+            return response('Error. Acceso no disponible', 401);
+        }
         return new EstadisticasClienteResource($estadisticaCliente);
     }
 
@@ -63,6 +73,9 @@ class EstadisticasClienteController extends Controller
      */
     public function update(UpdateEstadisticasClienteRequest $request, EstadisticasCliente $id)
     {
+        if($request->id_cliente && !Usuarios::find($request->id_cliente)){
+            return response('Error, Usuario no existe no existe.');
+        }
         $estadisticaCliente = EstadisticasCliente::find($id);
         $estadisticaCliente->update($request->all());
     }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteTipoMusculoRequest;
+use App\Http\Requests\IndexTipoMusculoRequest;
+use App\Http\Requests\ShowTipoMusculoRequest;
 use App\Http\Resources\TipoMusculoCollection;
 use App\Http\Resources\TipoMusculoResource;
 use App\Models\TipoMusculo;
@@ -14,7 +16,7 @@ class TipoMusculoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(IndexTipoMusculoRequest $request)
     {
         $tipomusculo = TipoMusculo::paginate(10);
         return new TipoMusculoCollection($tipomusculo);
@@ -40,7 +42,7 @@ class TipoMusculoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(ShowTipoMusculoRequest $request, $id)
     {
         $tipoMusculo = TipoMusculo::with('ejercicios')->find($id);
         if(!$tipoMusculo){
